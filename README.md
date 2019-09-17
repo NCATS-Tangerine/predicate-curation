@@ -1,6 +1,6 @@
 # Purpose of this repo
 
-This repo is where team X-ray and team Gamma are sharing YAML files for mapping 
+This repo is where teams X-ray, Gamma, Orange, etc. are sharing YAML files for mapping 
 knowledge-graph-specific predicates to a simplified set of predicates.
 The hope is that we can develop a comprehensive, Translator-standard set of
 predicate mappings for all the predicates from various KS's (e.g., SemMedDB,
