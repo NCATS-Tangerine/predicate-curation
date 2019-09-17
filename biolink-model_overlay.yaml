@@ -1,0 +1,1089 @@
+id: "http://bioentity.io/json-schema/biolink.json"
+name: biolink model (gamma)
+description: Entity and association taxonomy and datamodel for life-sciences data (Gamma Overlay)
+
+classes:
+  
+    #Not in biolink-model
+  genetic condition:
+    is_a: disease
+    description: >-
+      A disease that is caused by genetic modifications where those modifications are inherited from a parent's genome.
+    mappings:
+      - "MONDO:0003847"
+
+#The following modifications are to connect biolink concepts to identifier prefixes. 
+#There needs to be a better place to do this.  The problem is that for e.g. gene,
+# these get put into the main file, in a different order.  When we merge, things get messed
+# up.
+  disease:
+    id_prefixes: #Adding identifiers for ROBOKOP
+        - MONDO
+        - DOID
+        - OMIM
+        - ORPHANET
+        - EFO
+        - UMLS
+        - MESH
+        - MEDDRA
+        - PHAROS.DISEASE 
+
+  phenotypic feature:
+    id_prefixes:
+      - HP
+      - EFO
+      - NCIT
+      - UMLS
+      - MEDDRA
+
+  chemical substance:
+    id_prefixes:
+      - CHEBI
+      - CHEMBL
+      - DRUGBANK
+      - PUBCHEM
+      - PR
+      - MESH
+      - HMDB
+      - INCHI
+      - INCHIKEY
+      - UNII
+      - PUBCHEM.COMPOUND
+      - KEGG.COMPOUND
+      - GTOPDB
+      - KEGG.DRUG
+      - PHAROS.DRUG
+      - DRUG.INTERACTION
+      - CTD
+      - UNIPROTKB
+      - METABOLON
+
+  anatomical entity:
+    id_prefixes:
+      - UBERON
+      - UMLS
+
+  cell:
+    id_prefixes:
+      - CL
+      - UMLS
+
+  gene:
+    id_prefixes:
+      - HGNC
+      - NCBIGENE
+      - ENSEMBL
+      - UNIPROTKB
+      - EC
+      - RNAcentral
+      - MGI
+      - ZFIN
+      - HGNC.SYMBOL
+      - IUPHAR
+
+  gene family:
+    id_prefixes:
+      - HGNC.FAMILY
+      - PANTHER.FAMILY
+
+  gene product:
+    id_prefixes:
+      - UNIPROTKB
+      - GTOPDB
+      - PR
+
+  sequence variant:
+    id_prefixes:
+      - CAID
+      - HGVS
+      - ROBO_VARIANT
+      - DBSNP
+      - CLINVARVARIANT
+      - MYVARIANT_HG19
+      - MYVARIANT_HG38
+      
+  pathway:
+    id_prefixes: 
+      - KEGG
+      - REACTOME
+      - SMPDB
+      - PHARMGKB.PATHWAYS
+      - WIKIPATHWAYS
+      - BIOCARTA.PATHWAY
+      - KEGG.PATHWAY
+      - REACT
+      - KEGG-path
+
+slots:
+
+  id:
+    mappings:
+      - rdfs:ID
+
+  gene associated with condition:
+    mappings:
+      - BIOLINK:0000001 # Minting id for this
+      - GENO:0000840 # pathogenic_for_condition
+      - GENO:0000841 # likely_pathogenic_for_condition
+
+  actively involved in:
+    mappings:
+      - biolink:gene_get_process             # biolink returns no relation_id or an identifier that is not a curie
+      - biolink:gene_get_process_or_function # biolink returns no relation_id or an identifier that is not a curie
+
+  affects:
+    mappings:
+      - GO:acts_on_population_of
+      - GOREL:0001006
+      - CTD:inferred
+      - CTD:prediction/hypothesis
+      - UPHENO:0000001
+      - RO:0002573
+
+  #In the model, here to get description
+  regulates, process to process:
+    description: >-
+      The source process modifies the frequency or magnitude of the target process.
+
+  negatively regulates, process to process:
+    description: >-
+      The source process terminates or reduces the frequency or magnitude of the target process.
+
+  positively regulates, process to process:
+    description: >-
+      The source process initiates or increases the frequency or magnitude of the target process.
+
+  regulates, entity to entity:
+    description: >-
+      Indicates that the source entity modifies a process that the target entity is capable of
+
+  #In the model, here for the hetio mappings
+  positively regulates, entity to entity:
+    description: >-
+      Indicates that the source entity increases a process that the target entity is capable of
+    mappings:
+      - RO:0002450
+      - hetio:UPREGULATES_AuG
+      - hetio:UPREGULATES_DuG
+      - GO:acts_upstream_of_or_within_positive_effect
+
+    #In the model, here for the hetio mappings
+  negatively regulates, entity to entity:
+    description: >-
+      Indicates that the source entity decreases a process that the target entity is capable of
+    mappings:
+      - RO:0002449
+      - hetio:DOWNREGULATES_AdG
+      - hetio:DOWNREGULATES_DdG
+
+  homologous to:
+    mappings:
+      - RO:0002158
+      - RO:0002159
+      - core#sexually:homologous:to
+
+
+
+
+  directly interacts with:
+    description: >-
+      Holds between molecular entities that phyically and directly interact with each other
+    mappings:
+      - SIO:000203                # Connected to (is that really a good mapping?)
+      - chembio:interacts
+      - CTD:interacts_with
+      - CTD:affects^binding
+      - PHAROS:drug_targets
+      - GAMMA:interacts_with
+      - GAMMA:antibody_binding
+      - GAMMA:other
+      - GAMMA:other/unknown
+      - GAMMA:pharmacological_chaperone
+      - GAMMA:releasing_agent
+      - GAMMA:kd
+      - GAMMA:kb
+      - GAMMA:binder
+      - GAMMA:binding
+      - GAMMA:ligand
+      - GAMMA:cofactor
+      - GAMMA:potency
+      - GAMMA:none
+      - GAMMA:multitarget
+      - GAMMA:chaperone
+      - GAMMA:component
+      - GAMMA:adduct
+      - GAMMA:antibody
+
+
+  #New CTD Stuff
+  affects abundance of:
+    mappings:
+      - CTD:affects_abundance_of
+      - CTD:affects^abundance
+      - RO:0002332
+
+  increases abundance of:
+    mappings:
+      - CTD:increases_abundance_of
+      - CTD:increases^abundance
+      - ubergraph-axioms.ofn#is:increase:of
+
+  decreases abundance of:
+    mappings:
+      - CTD:decreases_abundance_of
+      - CTD:decreases^abundance
+      - ubergraph-axioms.ofn#is:decrease:of
+
+  affects activity of:
+    mappings:
+      - CTD:affects_activity_of
+      - CTD:affects^activity
+      - GAMMA:allosteric_modulator
+      - GAMMA:modulator
+      - GAMMA:regulator
+
+  increases activity of:
+    mappings:
+      - CTD:increases_activity_of
+      - CTD:increases^activity
+      - GAMMA:activator
+      - GAMMA:partial_agonist
+      - GAMMA:agonist
+      - GAMMA:opener
+      - GAMMA:positive_allosteric_modulator
+      - GAMMA:positive_modulator
+      - GAMMA:ec50
+      - GAMMA:ac50
+      - GAMMA:inducer
+      - GAMMA:potentiator
+      - GAMMA:stimulator
+
+  decreases activity of:
+    mappings:
+      - CTD:decreases_activity_of
+      - CTD:decreases^activity
+      - GAMMA:allosteric_antagonist
+      - GAMMA:partial_antagonist
+      - GAMMA:antagonist
+      - GAMMA:weak_inhibitor
+      - GAMMA:inhibitor
+      - GAMMA:channel_blocker
+      - GAMMA:gating_inhibitor
+      - GAMMA:blocker
+      - GAMMA:inverse_agonist
+      - GAMMA:inactivator
+      - GAMMA:downregulator
+      - GAMMA:negative_modulator
+      - GAMMA:negative_allosteric_modulator
+      - GAMMA:inhibitory_allosteric_modulator
+      - GAMMA:ic50
+      - GAMMA:ki
+      - GAMMA:aggregation_inhibitor
+      - GAMMA:conversion_inhibitor
+      - GAMMA:suppressor
+
+  affects expression of:
+    mappings:
+      - CTD:affects_expression_of
+      - CTD:affects^expression
+
+  increases expression of:
+    mappings:
+      - CTD:increases_expression_of
+      - CTD:increases^expression
+      - GTEx:increases_expression_of
+
+  decreases expression of:
+    mappings:
+      - CTD:decreases_expression_of
+      - CTD:decreases^expression
+      - GTEx:decreases_expression_of
+
+  affects folding of:
+    mappings:
+      - CTD:affects_folding_of
+      - CTD:affects^folding
+
+  increases folding of:
+    mappings:
+      - CTD:increases_folding_of
+      - CTD:increases^folding
+
+  decreases folding of:
+    mappings:
+      - CTD:decreases_folding_of
+      - CTD:decreases^folding
+
+  affects localization of:
+    mappings:
+      - CTD:affects_localization_of
+      - CTD:affects^localization
+      - RO:0002313
+      - GAMMA:storage
+
+  increases localization of:
+    mappings:
+      - CTD:increases_localization_of
+      - CTD:increases^localization
+      - RO:0002340
+
+  decreases localization of:
+    mappings:
+      - CTD:decreases_localization_of
+      - CTD:decreases^localization
+      - RO:0002345
+
+  affects metabolic processing of:
+    mappings:
+      - CTD:affects_metabolic_processing_of
+      - CTD:affects^metabolic processing
+      - GAMMA:catalytic_activity
+
+  increases metabolic processing of:
+    mappings:
+      - CTD:increases_metabolic_processing_of
+      - CTD:increases^metabolic processing
+
+  decreases metabolic processing of:
+    mappings:
+      - CTD:decreases_metabolic_processing_of
+      - CTD:decreases^metabolic processing
+
+  affects molecular modification of:
+    mappings:
+      - CTD:affects_molecular_modification_of
+      - CTD:affects^acetylation
+      - CTD:affects^acylation
+      - CTD:affects^alkylation
+      - CTD:affects^amination
+      - CTD:affects^carbamoylation
+      - CTD:affects^ethylation
+      - CTD:affects^glutathionylation
+      - CTD:affects^glycation
+      - CTD:affects^glycosylation
+      - CTD:affects^glucuronidation
+      - CTD:affects^N-linked glycosylation
+      - CTD:affects^O-linked glycosylation
+      - CTD:affects^hydroxylation
+      - CTD:affects^lipidation
+      - CTD:affects^farnesylation
+      - CTD:affects^geranoylation
+      - CTD:affects^myristoylation
+      - CTD:affects^palmitoylation
+      - CTD:affects^prenylation
+      - CTD:affects^methylation
+      - CTD:affects^nitrosation
+      - CTD:affects^nucleotidylation
+      - CTD:affects^phosphorylation
+      - CTD:affects^ribosylation
+      - CTD:affects^ADP-ribosylation
+      - CTD:affects^sulfation
+      - CTD:affects^sumoylation
+      - CTD:affects^ubiquitination
+      - CTD:affects^oxidation
+      - CTD:affects^reduction
+      - CTD:affects^carboxylation
+
+  increases molecular modification of:
+    mappings:
+      - CTD:increases_molecular_modification_of
+      - CTD:increases^acetylation
+      - CTD:increases^acylation
+      - CTD:increases^alkylation
+      - CTD:increases^amination
+      - CTD:increases^carbamoylation
+      - CTD:increases^ethylation
+      - CTD:increases^glutathionylation
+      - CTD:increases^glycation
+      - CTD:increases^glycosylation
+      - CTD:increases^glucuronidation
+      - CTD:increases^N-linked glycosylation
+      - CTD:increases^O-linked glycosylation
+      - CTD:increases^hydroxylation
+      - CTD:increases^lipidation
+      - CTD:increases^farnesylation
+      - CTD:increases^geranoylation
+      - CTD:increases^myristoylation
+      - CTD:increases^palmitoylation
+      - CTD:increases^prenylation
+      - CTD:increases^methylation
+      - CTD:increases^nitrosation
+      - CTD:increases^nucleotidylation
+      - CTD:increases^phosphorylation
+      - CTD:increases^ribosylation
+      - CTD:increases^ADP-ribosylation
+      - CTD:increases^sulfation
+      - CTD:increases^sumoylation
+      - CTD:increases^ubiquitination
+      - CTD:increases^oxidation
+      - CTD:increases^reduction
+      - CTD:increases^carboxylation
+      - GAMMA:acetylation
+      - GAMMA:oxidizer
+
+  decreases molecular modification of:
+    mappings:
+      - CTD:decreases_molecular_modification_of
+      - CTD:decreases^acetylation
+      - CTD:decreases^acylation
+      - CTD:decreases^alkylation
+      - CTD:decreases^amination
+      - CTD:decreases^carbamoylation
+      - CTD:decreases^ethylation
+      - CTD:decreases^glutathionylation
+      - CTD:decreases^glycation
+      - CTD:decreases^glycosylation
+      - CTD:decreases^glucuronidation
+      - CTD:decreases^N-linked glycosylation
+      - CTD:decreases^O-linked glycosylation
+      - CTD:decreases^hydroxylation
+      - CTD:decreases^lipidation
+      - CTD:decreases^farnesylation
+      - CTD:decreases^geranoylation
+      - CTD:decreases^myristoylation
+      - CTD:decreases^palmitoylation
+      - CTD:decreases^prenylation
+      - CTD:decreases^methylation
+      - CTD:decreases^nitrosation
+      - CTD:decreases^nucleotidylation
+      - CTD:decreases^phosphorylation
+      - CTD:decreases^ribosylation
+      - CTD:decreases^ADP-ribosylation
+      - CTD:decreases^sulfation
+      - CTD:decreases^sumoylation
+      - CTD:decreases^ubiquitination
+      - CTD:decreases^oxidation
+      - CTD:decreases^reduction
+      - CTD:decreases^carboxylation
+      - GAMMA:deoxidizer
+
+  affects synthesis of:
+    mappings:
+      - CTD:affects_synthesis_of
+      - CTD:affects^chemical synthesis
+
+  increases synthesis of:
+    mappings:
+      - CTD:increases_synthesis_of
+      - CTD:increases^chemical synthesis
+      - GAMMA:product_of
+
+  decreases synthesis of:
+    mappings:
+      - CTD:decreases_synthesis_of
+      - CTD:decreases^chemical synthesis
+      - GAMMA:inhibition_of_synthesis
+
+  affects degradation of:
+    mappings:
+      - CTD:affects_degradation_of
+      - CTD:affects^degradation
+      - CTD:affects^cleavage
+      - CTD:affects^hydrolysis
+
+  increases degradation of:
+    mappings:
+      - CTD:increases_degradation_of
+      - CTD:increases^degradation
+      - CTD:increases^cleavage
+      - CTD:increases^hydrolysis
+      - GAMMA:substrate
+
+  decreases degradation of:
+    mappings:
+      - CTD:decreases_degradation_of
+      - CTD:decreases^degradation
+      - CTD:decreases^cleavage
+      - CTD:decreases^hydrolysis
+
+  affects mutation rate of:
+     mappings:
+      - CTD:affects_mutation_rate_of
+      - CTD:affects^mutagenesis
+
+  increases mutation rate of:
+     mappings:
+      - CTD:increases_mutation_rate_of
+      - CTD:increases^mutagenesis
+
+  decreases mutation rate of:
+     mappings:
+      - CTD:decreases_mutation_rate_of
+      - CTD:decreases^mutagenesis
+
+  affects response to:
+    mappings:
+      - CTD:affects_response_to
+      - CTD:affects^response to substance
+
+  increases response to:
+    mappings:
+      - CTD:increases_response_to
+      - CTD:increases^response to substance
+
+  decreases response to:
+    mappings:
+      - CTD:decreases_response_to
+      - CTD:decreases^response to substance
+      - GAMMA:desensitize_the_target
+
+  affects splicing of:
+    mappings:
+      - CTD:affects_splicing_of
+      - CTD:affects^RNA splicing
+      - CTD:affects^splicing
+
+  increases splicing of:
+    mappings:
+      - CTD:increases_splicing_of
+      - CTD:increases^RNA splicing
+      - CTD:increases^splicing
+
+  decreases splicing of:
+    mappings:
+      - CTD:decreases_splicing_of
+      - CTD:decreases^RNA splicing
+      - CTD:decreases^splicing
+
+  affects stability of:
+    mappings:
+      - CTD:affects_stability_of
+      - CTD:affects^stability
+
+  increases stability of:
+    mappings:
+      - CTD:increases_stability_of
+      - CTD:increases^stability
+
+  decreases stability of:
+    mappings:
+      - CTD:decreases_stability_of
+      - CTD:decreases^stability
+
+  affects transport of:
+    mappings:
+      - CTD:affects_transport_of
+      - CTD:affects^transport
+      - RO:0002011
+
+  increases transport of:
+    mappings:
+      - CTD:increases_transport_of
+      - CTD:increases^transport
+      - RO:0002020
+      - GAMMA:carrier
+      - GAMMA:transporter
+
+  decreases transport of:
+    mappings:
+      - CTD:decreases_transport_of
+      - CTD:decreases^transport
+
+  affects secretion of:
+    mappings:
+      - CTD:affects_secretion_of
+      - CTD:affects^secretion
+      - CTD:affects^export
+
+  increases secretion of:
+    mappings:
+      - CTD:increases_secretion_of
+      - CTD:increases^secretion
+      - CTD:increases^export
+
+  decreases secretion of:
+    mappings:
+      - CTD:decreases_secretion_of
+      - CTD:decreases^secretion
+      - CTD:decreases^export
+
+  affects uptake of:
+    mappings:
+      - CTD:affects_uptake_of
+      - CTD:affects^uptake
+      - CTD:affects^import
+
+  increases uptake of:
+    mappings:
+      - CTD:increases_uptake_of
+      - CTD:increases^uptake
+      - CTD:increases^import
+
+  decreases uptake of:
+    mappings:
+      - CTD:decreases_uptake_of
+      - CTD:decreases^uptake
+      - CTD:decreases^import
+
+    # in translator_minimal, here for other mappings
+  has phenotype:
+    mappings:
+      - hetio:PRESENTS_DpS
+      - GAMMA:0000002 # inverse of UPHENO:0000001, which I can't seem to find an inverse of anywhere.
+      - gwascatalog:has_phenotype
+
+    #In translator_minimal
+  coexists with:
+    mappings:
+      - RO:0002325  # colocalizes_with
+      - BSPO:0000096 #anterior to
+      - BSPO:0000097 #distal to
+      - BSPO:0000098 #dorsal to
+      - BSPO:0000099 #posterior to
+      - BSPO:0000100 #proximal to
+      - BSPO:0000102 #ventral to
+      - BSPO:0000104 #approximately perpendicular to
+      - BSPO:0015001 #finshes axis
+      - BSPO:0015002 #follows axis
+      - BSPO:0015003 #has axis
+      - BSPO:0015005 #orthogonal to
+      - BSPO:0015007 #starts axis
+      - BSPO:0015008 #surface of
+      - BSPO:0015014 #immdiately superficial to
+      - RO:0000300   #in neural circuit with
+      - RO:0000302   #downstream in neural circuit with
+      - RO:0002002   #has boundary
+      - RO:0002120   #synapsed to
+      - RO:0002150   #continuous with
+      - RO:0002170   #connected to
+      - RO:0002176   #connects
+      - RO:0002177   #attaches to part of
+      - RO:0002177   #attaches to part of
+      - RO:0002178   #supplies
+      - RO:0002179   #drains
+      - RO:0002371   #attached to
+      - core#anastomes:with
+      - core#anteriorly:connected:to
+      - core#channel:for
+      - core#channels:from
+      - core#channels:into
+      - core#conduit:for
+      - core#distally:connected:to
+      - core#extends:fibers:into
+      - core#filtered:through
+      - core#indirectly:supplies
+      - core#proximally:connected:to
+      - core#synapsed:by
+      - core#transitively:anteriorly:connected:to
+      - core#transitively:connected:to
+      - core#transitively:distally:connected:to
+      - core#transitively:proximally:connected:to
+
+
+    #In translator_minimal now, here for hetio
+  expresses:
+    description: >-
+        inverse of expressed in 
+    mappings:
+      - RO:0002292
+      - hetio:EXPRESSES_AeG
+
+  derives into:
+    mappings:
+      - RO:0001001
+
+
+  location of:
+    mappings:  
+      - RO:0001015
+      - BFO:0000067 #contains process
+      - RO:0001019  #contains
+      - RO:0002005  #innervated by
+      - RO:0002103  #synapsed by
+      - RO:0002221  #surrounds
+
+
+  located in:
+    mappings:
+      - GO:regulates_o_occurs_in
+      - RO:0002231 # has_start_location
+      - RO:0002338 # has_target_start_location
+      - RO:0004026
+      - RO:0004027
+      - RO:0001018
+      - RO:0002100 #has soma location
+      - RO:0002102 #axon synapses in
+      - RO:0002113 #has presynaptic terminal in
+      - RO:0002130 #has presynaptic terminal in
+      - RO:0002134  #innervates
+      - quick_go:is_active_in
+      - BSPO:0000107 #deep to
+      - BSPO:0000108 #superficial to
+      - BSPO:0000120 #in left side of
+      - BSPO:0000121 #in right side of
+      - BSPO:0000122 #in posterior side of
+      - BSPO:0000123 #in anterior side of
+      - BSPO:0000124 #in proximal side of
+      - BSPO:0000125 #in distal side of
+      - BSPO:0000126 #in lateral side of
+      - BSPO:0001100 #in superficial part of
+      - BSPO:0001101 #in deep part of
+      - BSPO:0001107 #immediately deep to
+      - BSPO:0015101 #in dorsal side of
+      - BSPO:0015102 #in ventral side of
+      - BSPO:0015202 #aboral to
+      - RO:0002219   #surrounded by
+      - core#in:central:side:of
+      - core#in:innermost:side:of
+      - core#in:outermost:side:of
+
+  contributes to:
+    mappings:
+      - RO:0002327 #enables
+      - CTD:marker/mechanism
+      - CTD:positivecorrelation
+      - RO:0003304
+
+  treats:
+    mappings:
+      - CTD:therapeutic
+      - CTD:negativecorrelation
+
+  produces:
+    mappings:
+      - GO:regulates_o_results_in_acquisition_of_features_of
+
+  participates in:
+    mappings:
+      - GO:mediated_by
+
+  has participant:
+    mappings:
+      - GOREL:0001007
+      - RO:0040036
+      - GOREL:0002008
+      - RO:0004007 #has primary input or output
+      
+  capable of:
+    mappings:
+      - RO:0002328 #Part of is capable of
+      - RO:0002216 #Capable of part of
+      - RO:0002329 #part of something that is capable of
+      - biolink:gene_get_function            # biolink returns no relation_id or an identifier that is not a curie
+      - RO:0002584
+  causes:
+    mappings:
+      - RO:0002595  #Actually causally relates entity to process, while causes is supposed to be entity to entity...
+      - RO:0002500  #Actually causally relates entity to process, and is only causally involved in
+      - mondo#disease:triggers
+      - RO:0003303
+
+  related to:
+    mappings:
+      - RO:0002324 #developmentally related to
+      - RO:0002487 # relation between structure and stage:
+      - RO:0002496
+      - RO:0002497
+      - RO:0002609 #causal or correlated
+      - RO:0004023 #causal relationship with disease as subject
+      - BFO:0000054
+      - RO:0040035
+      - RO:0009501  # Better to turn to B - (Causes) -> A  for Pheno -> Biological Process/ Molecular activity, where B = Biological process , A= Phenotypic feature.
+      - RO:0004028 # ^^ Similar case like 0009501
+      - RO:0002337
+      - RO:0002254
+      - RO:0002202
+      - RO:0002258
+      - RO:0002203 # develops into
+      - RO:0002207 # develops from
+      - RO:0002225 # develops from part of
+      - RO:0002226 # develops in
+      - RO:0002255 # developmentally contributes to
+      - RO:0002256 # developmentally induced by
+      - RO:0002285 # developmentally replaces
+      - RO:0002286 # developmentally succeeded by
+      - RO:0002320 # evolutionarily related to
+      - RO:0002156 #derived by descent from
+      - RO:0002372 # has muscle origin
+      - RO:0002373 # has muscle insertion
+      - RO:0002374 # derived from ancestral fusion of
+      - RO:0002374 # derived from ancestral fusion of
+      - RO:0002375 # in branching relationship with
+      - RO:0002384 # has developmental potential involving
+      - RO:0002385 # has potential do developmentally contribute
+      - RO:0002387 # has potential to develop into
+      - RO:0002388 # has potential to directly develop into
+      - RO:0002433 # contributes to morphology of
+      - RO:0002494 # transformation of
+      - RO:0002495 # immediate transformation of
+      - RO:0002567 # biomechanically related to
+      - core#protects
+
+  disrupts:
+    mappings:
+      - RO:0004024
+      - RO:0004025
+
+  gene to expression site association:
+    mappings:
+      - gene_to_expression_site_association
+
+  precedes:
+    mappings:
+      - GO:acts_upstream_of
+      - GO:acts_upstream_of_or_within
+ 
+  has input:
+    mappings:
+      - RO:0004009 #has primary input
+  
+  
+
+  #the following are not in the original biolink model
+
+  affects expression in:
+    mappings:
+      - GTEx:affects_expression_in
+
+  is missense variant of:
+    description: >-
+      holds between a sequence variant and a gene, such the sequence variant results in a different amino acid sequence but where the length is preserved.
+    mappings:
+      - SO:0001583
+      - SNPEFF:missense_variant
+      - SNPEFF:initiator_codon_variant
+      - SNPEFF:structural_interaction_variant
+
+  is synonymous variant of:
+    description: >-
+      holds between a sequence variant and a gene, such the sequence variant is in the coding sequence of the gene, but results in the same amino acid sequence
+    mappings:
+      - SO:0001819
+      - SNPEFF:synonymous_variant
+      - SNPEFF:start_retained
+      - SNPEFF:stop_retained_variant
+
+  is nonsense variant of:
+    description: >-
+      holds between a sequence variant and a gene, such the sequence variant results in a premature stop codon
+    mappings:
+      - SO:0002054
+      - SNPEFF:stop_gained
+      - SNPEFF:start_lost
+      - SNPEFF:stop_lost
+      - SNPEFF:frameshift_variant
+
+  is splice site variant of:
+    description: >-
+      holds between a sequence variant and a gene, such the sequence variant is in the canonical splice site of one of the gene's exons.
+    mappings:
+      - SO:0001629
+      - SNPEFF:splice_region_variant
+      - SNPEFF:splice_acceptor_variant
+      - SNPEFF:splice_donor_variant
+
+  is nearby variant of:
+    description: >-
+      holds between a sequence variant and a gene sequence that the variant is genomically close to.
+    mappings:
+      - GAMMA:0000102
+      - SNPEFF:downstream_gene_variant
+      - SNPEFF:upstream_gene_variant
+
+  is non coding variant of:
+    description: >-
+      holds between a sequence variant and a gene, where the variant does not affect the coding sequence
+    mappings:
+      - GAMMA:0000103
+      - SNPEFF:3_prime_UTR_variant
+      - SNPEFF:5_prime_UTR_variant
+      - SNPEFF:5_prime_UTR_premature_start_codon_gain_variant
+      - SNPEFF:non_coding_transcript_exon_variant
+      - SNPEFF:intron_variant
+
+  disease to gene association:
+    description: >-
+      holds between a disease and a related gene
+    is_a: association
+    mappings:
+      - NCIT:R176 #disease_mapped_to_gene/gene_mapped_to_disease
+      - PHAROS:gene_involved
+      - hetio:ASSOCIATES_DaG
+
+  results in motion of:
+    description: >-
+      holds between a process and an entity that moves as a result of the process
+    domain: process
+    range: entity #?
+    mappings:
+      - RO:0002565
+
+  results in developmental progression of:
+    description: >-
+      holds between a developmental process and the anatomical output of that process
+    mappings:
+      - RO:0002295
+      - RO:0002296   # Probably should handle this some other way...
+      - RO:0002297
+      - RO:0002587
+      - RO:0002588
+      - RO:0002298
+      - RO:0002299
+      - RO:0002315
+      - RO:0002343
+      - RO:0002348
+      - RO:0002349
+      - RO:0002355
+      - RO:0002356
+      - RO:0002357
+      - RO:0002552
+      - RO:0002300
+      - RO:0002301
+      - RO:0002585
+
+  has output:
+    description: >-
+      holds between a process and an entity created by the process
+    mappings:
+      - RO:0002234
+      - RO:0004008 #has primary output
+
+  disease has basis in:
+    is_a: related to 
+    description : >-
+      A relation that holds between a disease and an entity where the state of the entity has contribution to the disease.
+    mappings:
+      - RO:0004019
+      - RO:0004020
+      - RO:0004021
+      - RO:0004022
+      - RO:0004030
+      - RO:0004017
+      - mondo#disease:has:basis:in:development:of
+      
+  causes adverse event:
+    description: >-
+      holds between a drug and a disease or phenotype that can be caused by the drug
+    mappings:
+     - RO:0003302 #Causes or contributes to
+     - Aeolus:0000001
+
+  contraindicated for:
+    description: >-
+      Holds between a drug and a disease or phenotype, such that a person with that disease should not be treated with the drug.
+    mappings:
+      - DrugCentral:0000001  
+ 
+  has not completed:
+    description: >-
+      holds between an entity and a process that the entity is capable of, but has not completed
+    mappings:
+      - cl#has:not:completed
+
+  has completed:
+    description: >-
+      holds between an entity and a process that the entity is capable of and has completed
+    mappings:
+      - cl#has:completed
+  
+  occurs in:
+    mappings:
+      - RO:0002339
+      - RO:0002344
+      - RO:0002479
+      - RO:0002232
+      - core#site:of
+
+  regulates:
+    description: >-
+      Indicates that the source changes the abundance or frequency of the target
+    mappings:
+      - RO:0002596
+  
+  negatively regulates:
+    description: >-
+      Indicates that the source terminates or decreases the abundance or frequency of the target
+    mappings:
+      - RO:0002597
+      - GO:acts_upstream_of_or_within_negative_effect
+      - GO:acts_upstream_of_negative_effect
+  
+  positively regulates:
+    description: >-
+      Indicates that the source initiates or increases the abundance or frequency of the target
+    mappings:
+      - RO:0002598
+      - GO:acts_upstream_of_positive_effect
+  
+  mereotopologically related to:
+    description: >-
+      A mereological relationship or a topological relationship
+    mappings:
+      - RO:0002323
+  
+  molecularly interacts with:
+    description: >-
+      holds between molecular entities that directly interact
+    mappings:
+      - CTD:molecularly_interacts_with
+
+  decreases molecular interaction:
+    description: >-
+      indicates that the source decreases the molecular interaction between the target and some other molecular entity
+    mappings:
+      - CTD:decreases_molecular_interaction_with
+  
+  increases molecular interaction:
+    description: >-
+      indicates that the source increases the molecular interaction between the target and some other molecular entity
+    mappings:
+      - CTD:increases_molecular_interaction_with
+  
+  part of:
+    mappings:
+      - RO:0002007
+      - BSPO:0001113 # preaxialmost_part_of
+      - RO:0002376 # tributary of
+      - RO:0002380 # branching part of
+      - RO:0002571 # lumen of
+      - RO:0002572 # luminal space of
+      - RO:0002576 # skeleton of
+      - core#layer:part:of
+      - core#subdivision:of
+      - core#trunk:part:of
+
+  has part:
+    mappings:
+      - RO:0002104 #has plasma membrane part
+      - RO:0002180 # has component
+      - RO:0002351 # has member
+      - RO:0002473 # composed primarily of
+      - RO:0002551 # has skeleton 
+      - RO:0002568 # has muscle antagonist 
+  
+  overlaps:
+    mappings:
+      - RO:0002220
+      - BSPO:0005001 # intersects midsagittal plane of
+
+  spatially disjoint from:
+    description: >-
+      holds between two entities that have no spatial overlap
+    mappings:
+      - RO:0002163
+
+  produced by:
+    is_a: related to
+    mappings:
+      - RO:0003001
+
+
+  in linkage disequilibrium with:
+    description: >-
+      holds between two sequence variants, the presence of which are correlated in a population
+    mappings:
+      - NCIT:C16798
+
+  has increased amount:
+    mappings:
+      - cl#has:high:plasma:membrane:amount
+
+  has decreased amount:
+    mappings:
+      - cl#has:low:plasma:membrane:amount
+
+  lacks part:
+    mappings:
+      - cl#lacks:part
+      - cl#lacks:plasma:membrane:part
+
