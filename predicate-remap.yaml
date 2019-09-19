@@ -170,6 +170,8 @@ disease_has_normal_issue_origin:
   invert: originates
 supersystem_of:
   delete: null
+has_supersystem:
+  keep: null
 gene_encodes_gene_product:
   rename: encodes
 gene_product_encoded_by_gene:
@@ -196,10 +198,12 @@ disease_excludes_abnormal_cell:
   delete: null
 branch_of:
   delete: null
+has_branch:
+  keep: null
 entire_anatomy_structure_of:
   delete: null
 has_entire_anatomy_structure:
-  delete: null
+  keep: null
 inverse_of_rn:
   invert: rn
 has_gene_product_element:
@@ -299,7 +303,7 @@ intent_of:
 laterality_of:
   delete: null
 has_laterality:
-  delete: null
+  keep: null
 is_not_normal_cell_origin_of_disease:
   delete: null
 diseaes_excludes_normal_cell_origin:
@@ -409,17 +413,17 @@ disease_excludes_primary_anatomic_site:
 is_lateral_anatomic_location_of:
   delete: null
 has_lateral_anatomic_location:
-  delete: null
+  keep: null
 is_presence_of_lateral_location:
   delete: null
 has_presence_of_lateral_location:
-  delete: null
+  keep: null
 organism_has_gene:
   invert: gene_found_in_organism
 is_aggregation_view_of:
   delete: null
 has_aggregation_view:
-  delete: null
+  keep: null
 positively_regulated_by:
   invert: positively_regulates
 negatively_regulated_by:
@@ -631,7 +635,7 @@ is_not_normal_tissue_origin_of_disease:
 disease_excludes_normal_tissue_origin:
   delete: null
 has_potential_to_develop_into:
-  rename: precedes
+  rename: develops_into
 channel_blocker:
   rename: inhibits
 disease_has_location:
@@ -647,13 +651,13 @@ partially_excised_anatomy_has_procedure:
 procedure_has_partially_excised_anatomy:
   delete: null
 medial_to:
-  delete: null
+  keep: null
 proximal_to:
-  delete: null
+  keep: null
 lateral_to:
-  delete: null
+  keep: null
 distal_to:
-  delete: null
+  keep: null
 developmental_stage_of:
   delete: null
 partial_agonist:
@@ -681,7 +685,7 @@ composed_primarily_of:
 allosteric_modulator:
   rename: regulates
 activator:
-  rename: positively_regulates
+  rename: activates
 has_segmental_supply:
   delete: null
 has_at_risk_population:
@@ -691,7 +695,7 @@ population_at_risk_for:
 surgical_approach_of:
   delete: null
 has_arterial_supply:
-  delete: null
+  invert: supplies
 enzyme_metabolizes_chemical_or_drug:
   rename: metabolizes
 chemical_or_drug_is_metabolized_by_enzyme:
@@ -699,9 +703,9 @@ chemical_or_drug_is_metabolized_by_enzyme:
 may_be_diagnoesd_by:
   delete: null
 anterior_to:
-  delete: null
+  keep: null
 posterior_to:
-  delete: null
+  keep: null
 realized_in_response_to_stimulus:
   invert: involved_in
 chromosome_involved_in_cytogenetic_abnormality:
@@ -776,9 +780,9 @@ excised_anatomy_has_procedure:
 procedure_has_excised_anatomy:
   delete: null
 superior_to:
-  delete: null
+  keep: null
 inferior_to:
-  delete: null
+  keep: null
 branching_part_of:
   rename: part_of
 has_developmental_contribution_from:
@@ -1133,5 +1137,404 @@ acts_on_population_of:
   rename: proliferates
 subdivision_of:
   rename: part_of
-
+has_primary_segmental_supply:
+  delete: null
+therapeutic_class_of:
+  delete: null
+secondary_segmental_supply_of:
+  rename: supplies
+has_secondary_segmental_supply:
+  delete: null
+secondary_segmental_supply_of:
+  rename: supplies
+has_high_plasma_membrane_amount:
+  rename: expresses
+starts_with:
+  invert: part_of
+matures_into:
+  rename: develops_into
+matures_from:
+  delete: null
+has_low_plasma_membrane_amount:
+  rename: expresses
+immediately_deep_to:
+  keep: null
+results_in_maturation_of:
+  rename: originates
+activity_of_allele:
+  delete: null
+allele_has_activity:
+  rename: has_activity
+has_indirect_device:
+  rename: has_device
+indirect_device_of:
+  delete: null
+homonym_of:
+  delete: null
+homonym_for:
+  delete: null
+results_in_disassembly_of:
+  rename: disassembles
+translation_of:
+  delete: null
+has_potential_to_developmentally_contribute_to:
+  rename: develops_into
+mediated_by:
+  invert: participates_in
+regulates_levels_of:
+  rename: regulates
+anatomy_originated_from_biological_process:
+  delete: null
+biological_process_has_result_anatomy:
+  rename: originates
+preceded_by:
+  invert: precedes
+results_in_commitment_to:
+  rename: produces
+disease_shares_features_of:
+  rename: similar_to
+develops_in:
+  rename: part_of
+inverse_agonist:
+  keep: null
+disease_caused_by_disruption_of:
+  invert: causes_or_contributes_to
+intersects_midsaggital_plane_of:
+  keep: null
+other:
+  delete: null
+posterolateral_to:
+  keep: null
+anteromedial_to:
+  keep: null
+results_in_transport_across:
+  rename: transports_across
+existence_starts_and_ends_during:
+  rename: occurs_during
+transforms_from:
+  delete: null
+transforms_into:
+  keep: null
+contains_process:
+  invert: part_of
+corresponds_to:
+  keep: null
+in_posterior_side_of:
+  keep: null
+biomarker_tested_in:
+  rename: biomarker_of
+has_continuation_branch:
+  rename: has_branch
+continuation_branch_of:
+  delete: null
+owning_subsection_of:
+  rename: part_of
+has_owning_subsection:
+  delete: null
+anteroinferior_to:
+  keep: null
+posterosuperior_to:
+  keep: null
+in_anterior_side_of:
+  keep: null
+anterolateral_to:
+  keep: null
+posteromedial_to:
+  keep: null
+biomarker_type_includes_gene:
+  delete: null
+gene_is_biomarker_type:
+  rename: biomarker_type
+superficial_to:
+  keep: null
+during:
+  keep: null
+inverse_of_during:
+  delete: null
+modifying_germline_mutation_in:
+  rename: mutations_contribute_to
+hydrolytic_enzyme:
+  rename: hydrolyzes
+opener:
+  keep: null
+results_in_structural_organization_of:
+  rename: organizes
+results_in_specification_of:
+  rename: specifies
+anteriorly_connected_to:
+  keep: null
+posteroinferior_to:
+  keep: null
+anterosuperior_to:
+  keep: null
+has_active_metabolites:
+  keep: null
+active_metabolites_of:
+  delete: null
+dorsal_to:
+  keep: null
+deep_to:
+  keep: null
+protects:
+  keep: null
+existence_starts_with:
+  rename: exists_during
+existence_ends_with:
+  rename: exists_during
+results_in_fusion_of:
+  rename: fuses
+is_subject_of:
+  delete: null
+has_subject:
+  keep: null
+developmentally_replaces:
+  rename: replaces
+cross_linking_agent:
+  rename: crosslinks
+different_than:
+  delete: null
+structural_class_of:
+  delete: null
+has_structural_class:
+  keep: null
+chemical_or_drug_is_product_of_biological_process:
+  delete: null
+biological_process_has_result_chemical_or_drug:
+  rename: produces
+is_marked_by_gene_product:
+  delete: null
+gene_product_is_biomarker_of:
+  rename: biomarker_of
+stimulator:
+  rename: activates
+develops_into:
+  keep: null
+realized_in_response_to:
+  rename: involves
+in_dorsal_side_of:
+  keep: null
+sexually_homologous_to:
+  rename: homologous_to
+results_in_growth_of:
+  keep: null
+chemical_or_drug_affects_abnormal_cell:
+  rename: affects
+abnormal_cell_affected_by_chemical_or_drug:
+  delete: null
+severity_of:
+  delete: null
+has_severity:
+  keep: null
+antisense:
+  keep: null
+direct_site_of:
+  delete: null
+has_direct_site:
+  keep: null
+fuses_with:
+  keep: null
+immediately_preceded_by:
+  invert: precedes
+gene_is_biomarker_of:
+  rename: biomarker_of
+disease_is_marked_by_gene:
+  invert: biomarker_of
+releasing_agent:
+  keep: null
+quantified_form_of:
+  delete: null
+has_quantified_form:
+  keep: null
+results_in_determination_of:
+  rename: determines
+site_of:
+  keep: null
+distalmost_part_of:
+  keep: null
+preaxialmost_part_of:
+  keep: null
+existence_start_during_or_after:
+  invert: precedes
+is_related_to_endogenous_product:
+  rename: mimics
+gene_product_has_abnormality:
+  rename: affects
+is_abnormality_of_gene_product:
+  delete: null
+endogenous_product_related_to:
+  delete: null
+immediately_superficial_to:
+  keep: null
+develops_from_part_of:
+  invert: originates
+sequestering_agent:
+  rename: sequesters
+simultaneous_with:
+  keep: null
+inverse_of_uses:
+  invert: uses
+ventral_to:
+  keep: null
+inferomedial_to:
+  keep: null
+superomedial_to:
+  keep: null
+superolateral_to:
+  keep: null
+inferolateral_to:
+  keep: null
+in_response_to:
+  invert: causes_or_contributes_to
+may_qualify:
+  delete: null
+may_be_qualified_by:
+  keep: null
+indirectly_supples:
+  rename: supplies
+results_in_transport_to_from_or_in:
+  rename: transports
+type:
+  rename: subclass_of
+chelating_agent:
+  rename: chelates
+happens_during:
+  rename: simultaneous_with
+realized_in:
+  rename: involves
+biological_process_involves_chemical_or_drug:
+  rename: involves
+chemical_or_drug_plays_role_in_biological_process:
+  delete: null
+filtered_through:
+  keep: null
+in_ventral_side_of:
+  keep: null
+positive_modulator:
+  rename: positively_regulates
+directly_negatively_regulates:
+  rename: negatively_regulates
+measurement_method_of:
+  delete: null
+has_measurement_method:
+  rename: has_method
+proximalmost_part_of:
+  keep: null
+directly_regulates:
+  rename: regulates
+directly_positively_regulates:
+  rename: positively_regulates
+associated_disease:
+  rename: associated_with
+associated_genetic_condition:
+  delete: null
+has_cross_section:
+  keep: null
+related_developmental_entity_of:
+  rename: related_to
+has_related_developmental_entity:
+  delete: null
+inverse_of_forms:
+  delete: null
+forms:
+  keep: null
+results_in_maintenance_of:
+  rename: maintains
+temporally_related_to:
+  keep: null
+technique_of:
+  delete: null
+has_technique:
+  keep: null
+confers_advantage_in:
+  keep: null
+postaxialmost_part_of:
+  keep: null
+negative_modulator:
+  rename: negatively_regulates
+development_type_of:
+  delete: null
+has_development_type:
+  keep: null
+has_completed:
+  keep: null
+has_start_location:
+  rename: involves
+by_means:
+  rename: involves
+eo_disease_has_associated_cell_type:
+  rename: affects
+cell_type_is_associated_with_eo_disease:
+  delete: null
+may_inhibit_effect_of:
+  keep: null
+effect_may_be_inhibited_by:
+  delete: null
+definitional_manifestation_of:
+  delete: null
+has_definitional_manifestation:
+  rename: involves
+in_deep_part_of:
+  keep: null
+axon_synapses_in:
+  rename: attached_to
+disease_responds_to:
+  rename: responds_to
+has_food_substance_analog:
+  rename: has_analog
+negative_allosteric_modulator:
+  rename: negatively_regulates
+has_not_completed:
+  keep: precedes
+develops_from:
+  invert: develops_into
+reformulation_of:
+  delete: null
+reformulated_to:
+  keep: null
+has_precondition:
+  rename: requires
+precondition_of:
+  delete: null
+surface_of:
+  keep: null
+vaccine:
+  keep: inhibits
+inverse_happens_during:
+  delete: null
+has_end_location:
+  rename: involves
+role_has_parent:
+  rename: subclass_of
+role_is_parent_of:
+  delete: null
+process_output_of:
+  delete: null
+has_process_output:
+  rename: produces
+inheres_in_part_of:
+  rename: involves
+attached_to_part_of:
+  rename: attached_to
+disease_causes_feature:
+  rename: causes_or_contributes_to
+results_in:
+  keep: null
+starts:
+  rename: part_of
+starts_with:
+  delete: null
+results_in_remodeling_of:
+  rename: modifies
+has_degree:
+  keep: null
+degree_of:
+  delete: null
+has_data_element:
+  keep: null
+data_element_of:
+  delete: null
+in_distal_side_of:
+  keep: null
+in_proximal_side_of:
+  keep: null
   
